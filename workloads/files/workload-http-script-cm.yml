@@ -1475,10 +1475,11 @@ data:
     import string 
     import random
 
-    def _json_payload(uuid, test_type, test_name, routes, conn_per_targetroute, keepalive, tls_reuse, delay, runtime, requests_per_second, latency_95pctl, timestamp_newyork, num_workload_generators):
+    def _json_payload(uuid, test_type, test_name, routes, conn_per_targetroute, keepalive, tls_reuse, delay, runtime, requests_per_second, latency_95pctl, timestamp_newyork, num_workload_generators, run_id):
         processed = []
         processed.append({
             "uuid" : uuid,
+            "run_id": run_id,
             "test_type" : test_type,
             "test_name" : test_name,
             "routes" : routes,
@@ -1511,6 +1512,7 @@ data:
         keepalive = int(os.environ["keepalive"])
         tls_reuse = os.environ["tls_reuse"]
         delay = int(os.environ["delay"])
+        run_id = os.environ.get("RUN_ID", "test-run")
         runtime = int(os.environ["runtime"])
         requests_per_second = float(os.environ["requests_per_second"])
         latency_95pctl = float(os.environ["latency_95pctl"])
@@ -1518,7 +1520,7 @@ data:
         num_workload_generators = float(os.environ["HTTP_TEST_LOAD_GENERATORS"])
         timestamp_newyork = datetime.datetime.now()
         
-        documents = _json_payload(uuid, test_type, test_name, routes, conn_per_targetroute, keepalive, tls_reuse, delay, runtime, requests_per_second, latency_95pctl, timestamp_newyork, num_workload_generators)
+        documents = _json_payload(uuid, test_type, test_name, routes, conn_per_targetroute, keepalive, tls_reuse, delay, runtime, requests_per_second, latency_95pctl, timestamp_newyork, num_workload_generators, run_id)
         if len(documents) > 0:
             _index_result("router-test-results", server, port, documents)
 
