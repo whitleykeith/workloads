@@ -25,7 +25,7 @@ pbench_server: "{{ lookup('env', 'PBENCH_SERVER')|default('', true) }}"
 # Other variables for workload tests
 scale_ci_results_token: "{{ lookup('env', 'SCALE_CI_RESULTS_TOKEN')|default('', true) }}"
 job_completion_poll_attempts: "{{ lookup('env', 'JOB_COMPLETION_POLL_ATTEMPTS')|default(1000, true)|int }}"
-
+run_id: "{{ lookup('env', 'RUN_ID') | default('test-run', true) }}"
 # HTTP workload specific parameters
 http_env_vars: [
   "ES_SERVER",
